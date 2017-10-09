@@ -115,19 +115,90 @@
 
             </div>
             <div class="col-md-9">
-                <div class="well article">
+                
+<div class="well article">
+        <h2><a href="/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/09/WeChatTicket-ssh-portforwarding.html">微信抢票｜利用SSH端口转发实现内网穿透</a></h2>
+        <span class="post-date">
+            
+            October-9-2017
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>由于某些原因，清华校内网不再允许外网访问，给微信项目的本地开发造成了一定困难，为此可以SSH端口转发的方法进行“内网穿透”，即主动向外网服务器发起请求建立SSH通道，在服务器建立socket监听某个端口，将数据通过SSH通道发送给内网的本地服务器，处理后经同样方法进行回传。</p>
 
+<p>服务器端的配置方法见 <a href="https://blog.magichc7.com/?p=5&amp;from=timeline">How to Set Up My First Server?</a></p>
+
+<h2 id="step-1">STEP 1</h2>
+<p>修改服务器端nginx转发，将监听的80端口转发到闲置端口（以7000为例）:</p>
+
+<p>/etc/nginx/conf.d/wct.conf:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>location / {
+ proxy_pass http://127.0.0.1:7000;
+}
+</code></pre></div></div>
+
+<h2 id="step-2">STEP 2</h2>
+<p>本地运行Django项目（假设运行在8000端口），并建立SSH远程转发，命令格式为：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh -R &lt;remote port&gt;:localhost:&lt;local port&gt; &lt;username&gt;@&lt;host ip&gt;
+</code></pre></div></div>
+
+<p>在本例中为：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh -R 7000:localhost:8000 ubuntu@&lt;your ip&gt;
+</code></pre></div></div>
+
+<h2 id="step-3">STEP 3</h2>
+<p>经过以上两个步骤，即可通过服务器ip对本地运行的Django项目进行访问，但微信消息中的“绑定”、“帮助”等链接依然无法访问，这是因为获取的url仍为通过本地ip进行访问，为此需要对<code class="highlighter-rouge">config.json</code>中的<code class="highlighter-rouge">"SITE_DOMAIN"</code>进行修改：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"SITE_DOMAIN": "http://&lt;your_server_ip&gt;"
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
     
-        <h2>2017</h2>
-        <ul>
-    
-    <li><span class="post-date">
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                微信开发 <span>(1)</span>
+                
+            </a></li>
         
-        Oct </span><a href="/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/09/WeChatTicket-ssh-portforwarding.html">微信抢票｜利用SSH端口转发实现内网穿透</a></li>
+      
+    </ul>
+      
 
-</ul>
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                微信 <span>(1)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
 </div>
-
+<div class="pagination">
+    
+    
+</div>
             </div>
         </div>
     </div>
