@@ -33,3 +33,14 @@ description: 用于在内网本地服务器进行开发和测试
 经过以上两个步骤，即可通过服务器ip对本地运行的Django项目进行访问，但微信消息中的“绑定”、“帮助”等链接依然无法访问，这是因为获取的url仍为通过本地ip进行访问，为此需要对`config.json`中的`"SITE_DOMAIN"`进行修改：
 
     "SITE_DOMAIN": "http://<your_server_ip>"
+
+## Q&A
+**Q:** 建立ssh连接时遇到：
+
+    Warning: remote port forwarding failed for listen port XXXX
+
+**A:** 进入服务器，查询并结束占用端口的进程
+
+    > sudo su
+    > netstat -tunlp
+    > kill -s 9 <PID>
