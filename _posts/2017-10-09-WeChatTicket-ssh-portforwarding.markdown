@@ -2,7 +2,7 @@
 layout: post
 title:  "微信抢票｜利用SSH端口转发实现内网穿透"
 categories: 微信开发
-tags: 微信
+tags: 微信 nginx SSH
 author: thss15fyt
 description: 用于在内网本地服务器进行开发和测试
 ---

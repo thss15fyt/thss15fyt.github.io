@@ -119,34 +119,167 @@
 
             </div>
             <div class="col-md-9">
-                <div class="well article">
+                
+<div class="well article">
+        <h2><a href="/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/12/WeChatTicket-server-release.html">微信抢票｜在服务器端部署项目的发布版本</a></h2>
+        <span class="post-date">
+            
+            October-12-2017
+        </span>
+        <hr style="border-top:1px solid #28323C;"/>
+    
+    <div class="post-content">
+    <p>在服务器端部署发布项目时，除项目本身需要配置外，还需要更根据Web服务器的不同进行配置，
+以下给出了使用Django自带服务器和uwsgi服务器的配置方法，均适用nginx进行转发。</p>
 
+<h2 id="项目配置">项目配置</h2>
+<p>1.修改<code class="highlighter-rouge">config.json</code>文件，关闭<code class="highlighter-rouge">DEBUG</code>模式</p>
 
-    <h2>微信开发</h2>
-    <ul>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"DEBUG": false
+</code></pre></div></div>
+
+<p>2.修改<code class="highlighter-rouge">WeChatTicket/settings.py</code>文件，关闭<code class="highlighter-rouge">TEMPLATES</code>中的<code class="highlighter-rouge">APP_DIRS</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TEMPLATES = [
+  {
+    ...
+    'APP_DIRS': False,
+    ...
+    },
+]
+</code></pre></div></div>
+
+<h2 id="使用django服务器">使用Django服务器</h2>
+<p>1.修改<code class="highlighter-rouge">/etc/nginx/conf.d/wct.conf</code>文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>location / {
+ root /home/ubuntu/WeChatTicket/static;
+ }
+location /wechat {
+ proxy_pass http://127.0.0.1:8000;
+ }
+location /api {
+ proxy_pass http://127.0.0.1:8000;
+} 2.在8000端口运行Django服务器
+
+python manage.py runserver 0:8000
+</code></pre></div></div>
+
+<p>也可以使进程在后台运行</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(python manage.py runserver &amp;)
+</code></pre></div></div>
+
+<p>需要关闭服务器进程时</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; lsof -i :8000
+&gt; kill -9 &lt;PID&gt;
+</code></pre></div></div>
+
+<p>3.重启nginx服务</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; touch reload
+&gt; service nginx restart
+</code></pre></div></div>
+
+<h2 id="使用uwsgi服务器">使用uwsgi服务器</h2>
+<p>1.修改<code class="highlighter-rouge">/etc/nginx/conf.d/wct.conf</code>文件</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>location / {
+ root /home/ubuntu/WeChatTicket/static;
+ }
+location /wechat {
+ uwsgi_pass unix:///home/ubuntu/WeChatTicket/wct.sock;
+ include /etc/nginx/uwsgi_params;
+ }
+location /api {
+ uwsgi_pass unix:///home/ubuntu/WeChatTicket/wct.sock;
+ include /etc/nginx/uwsgi_params;
+}
+</code></pre></div></div>
+
+<p>2.重启uwsgi</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; sudo su
+&gt; ps -aux | grep uwsgi
+&gt; kill -9 &lt;PID&gt;
+&gt; exit
+
+&gt; uwsgi --ini uwsgi.ini
+</code></pre></div></div>
+
+<p>3.重启nginx</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; touch reload
+&gt; service nginx restart
+</code></pre></div></div>
+
+    <hr style="border-top:1px solid #28323C;"/>
+
+    <!-- tags and categories under post -->
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+         
+            <li class="icon-style"><a href="/categories.html">
+                微信开发 <span>(2)</span>
+                
+            </a></li>
         
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    Oct-2017 </span><a href="/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/12/WeChatTicket-server-release.html">微信抢票｜在服务器端部署项目的发布版本</a></li>
-            
-            
-        
-            
-            
-                <li><span class="post-date">
-                    
-                    Oct-2017 </span><a href="/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/09/WeChatTicket-ssh-portforwarding.html">微信抢票｜利用SSH端口转发实现内网穿透</a></li>
-            
-            
-        
-        
+      
     </ul>
+      
 
+    
+    <ul class="list-unstyled list-inline">
+      <li><i class="icon-tags"></i></li>
+      
+      
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                微信 <span>(2)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                Django <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                uwsgi <span>(1)</span>
+                ,
+                </a>
+            </li>
+         
+            <li class="icon-style">
+                <a href="/tags.html">
+                nginx <span>(2)</span>
+                
+                </a>
+            </li>
+        
+      
+      
+    </ul>
+      
+
+    </div>
+    
 </div>
-
+<div class="pagination">
+    
+    
+    <a class="btn btn-default" href="/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/09/WeChatTicket-ssh-portforwarding.html" class="previous">Older Post</a>
+    
+</div>
             </div>
         </div>
     </div>

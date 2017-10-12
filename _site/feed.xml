@@ -7,6 +7,98 @@
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>微信抢票｜在服务器端部署项目的发布版本</title>
+				<description>&lt;p&gt;在服务器端部署发布项目时，除项目本身需要配置外，还需要更根据Web服务器的不同进行配置，
+以下给出了使用Django自带服务器和uwsgi服务器的配置方法，均适用nginx进行转发。&lt;/p&gt;
+
+&lt;h2 id=&quot;项目配置&quot;&gt;项目配置&lt;/h2&gt;
+&lt;p&gt;1.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;config.json&lt;/code&gt;文件，关闭&lt;code class=&quot;highlighter-rouge&quot;&gt;DEBUG&lt;/code&gt;模式&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;DEBUG&quot;: false
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;WeChatTicket/settings.py&lt;/code&gt;文件，关闭&lt;code class=&quot;highlighter-rouge&quot;&gt;TEMPLATES&lt;/code&gt;中的&lt;code class=&quot;highlighter-rouge&quot;&gt;APP_DIRS&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;TEMPLATES = [
+  {
+    ...
+    'APP_DIRS': False,
+    ...
+    },
+]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;使用django服务器&quot;&gt;使用Django服务器&lt;/h2&gt;
+&lt;p&gt;1.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/nginx/conf.d/wct.conf&lt;/code&gt;文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;location / {
+ root /home/ubuntu/WeChatTicket/static;
+ }
+location /wechat {
+ proxy_pass http://127.0.0.1:8000;
+ }
+location /api {
+ proxy_pass http://127.0.0.1:8000;
+} 2.在8000端口运行Django服务器
+
+python manage.py runserver 0:8000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;也可以使进程在后台运行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(python manage.py runserver &amp;amp;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;需要关闭服务器进程时&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; lsof -i :8000
+&amp;gt; kill -9 &amp;lt;PID&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;3.重启nginx服务&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; touch reload
+&amp;gt; service nginx restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;使用uwsgi服务器&quot;&gt;使用uwsgi服务器&lt;/h2&gt;
+&lt;p&gt;1.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/nginx/conf.d/wct.conf&lt;/code&gt;文件&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;location / {
+ root /home/ubuntu/WeChatTicket/static;
+ }
+location /wechat {
+ uwsgi_pass unix:///home/ubuntu/WeChatTicket/wct.sock;
+ include /etc/nginx/uwsgi_params;
+ }
+location /api {
+ uwsgi_pass unix:///home/ubuntu/WeChatTicket/wct.sock;
+ include /etc/nginx/uwsgi_params;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;2.重启uwsgi&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; sudo su
+&amp;gt; ps -aux | grep uwsgi
+&amp;gt; kill -9 &amp;lt;PID&amp;gt;
+&amp;gt; exit
+
+&amp;gt; uwsgi --ini uwsgi.ini
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;3.重启nginx&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; touch reload
+&amp;gt; service nginx restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+				<pubDate>Thu, 12 Oct 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/12/WeChatTicket-server-release.html</link>
+				<guid isPermaLink="true">http://localhost:4000/%E5%BE%AE%E4%BF%A1%E5%BC%80%E5%8F%91/2017/10/12/WeChatTicket-server-release.html</guid>
+			</item>
+		
+			<item>
 				<title>微信抢票｜利用SSH端口转发实现内网穿透</title>
 				<description>&lt;p&gt;由于某些原因，清华校内网不再允许外网访问，给微信项目的本地开发造成了一定困难，为此可以SSH端口转发的方法进行“内网穿透”，即主动向外网服务器发起请求建立SSH通道，在服务器建立socket监听某个端口，将数据通过SSH通道发送给内网的本地服务器，处理后经同样方法进行回传。&lt;/p&gt;
 
