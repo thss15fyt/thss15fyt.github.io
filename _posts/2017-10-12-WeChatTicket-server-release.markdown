@@ -11,9 +11,10 @@ description: 提供了在Django和uwsgi服务器部署方法
 以下给出了使用Django自带服务器和uwsgi服务器的配置方法，均适用nginx进行转发。
 
 ## 项目配置
-1.修改`config.json`文件，关闭`DEBUG`模式
+1.修改`config.json`文件
 
-    "DEBUG": false
+    "DEBUG": false,
+    "IGNORE_WECHAT_SIGNATURE": false,
 
 2.修改`WeChatTicket/settings.py`文件，关闭`TEMPLATES`中的`APP_DIRS`
 

@@ -12,9 +12,10 @@
 以下给出了使用Django自带服务器和uwsgi服务器的配置方法，均适用nginx进行转发。&lt;/p&gt;
 
 &lt;h2 id=&quot;项目配置&quot;&gt;项目配置&lt;/h2&gt;
-&lt;p&gt;1.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;config.json&lt;/code&gt;文件，关闭&lt;code class=&quot;highlighter-rouge&quot;&gt;DEBUG&lt;/code&gt;模式&lt;/p&gt;
+&lt;p&gt;1.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;config.json&lt;/code&gt;文件&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;DEBUG&quot;: false
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&quot;DEBUG&quot;: false,
+&quot;IGNORE_WECHAT_SIGNATURE&quot;: false,
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;2.修改&lt;code class=&quot;highlighter-rouge&quot;&gt;WeChatTicket/settings.py&lt;/code&gt;文件，关闭&lt;code class=&quot;highlighter-rouge&quot;&gt;TEMPLATES&lt;/code&gt;中的&lt;code class=&quot;highlighter-rouge&quot;&gt;APP_DIRS&lt;/code&gt;&lt;/p&gt;

@@ -133,9 +133,10 @@
 以下给出了使用Django自带服务器和uwsgi服务器的配置方法，均适用nginx进行转发。</p>
 
 <h2 id="项目配置">项目配置</h2>
-<p>1.修改<code class="highlighter-rouge">config.json</code>文件，关闭<code class="highlighter-rouge">DEBUG</code>模式</p>
+<p>1.修改<code class="highlighter-rouge">config.json</code>文件</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"DEBUG": false
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"DEBUG": false,
+"IGNORE_WECHAT_SIGNATURE": false,
 </code></pre></div></div>
 
 <p>2.修改<code class="highlighter-rouge">WeChatTicket/settings.py</code>文件，关闭<code class="highlighter-rouge">TEMPLATES</code>中的<code class="highlighter-rouge">APP_DIRS</code></p>
