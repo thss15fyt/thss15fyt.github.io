@@ -40,9 +40,12 @@ location /wechat {
  }
 location /api {
  proxy_pass http://127.0.0.1:8000;
-} 2.在8000端口运行Django服务器
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-python manage.py runserver 0:8000
+&lt;p&gt;2.在8000端口运行Django服务器&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python manage.py runserver 0:8000
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;也可以使进程在后台运行&lt;/p&gt;
