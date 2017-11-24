@@ -7,6 +7,26 @@
 		<atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
 		
 			<item>
+				<title>Test.me｜中期个人总结</title>
+				<description>&lt;p&gt;我们软件工程大作业的选题是Test.me大学生竞赛平台，目前开发已经过半，从以下几方面进行一下个人总结：&lt;/p&gt;
+
+&lt;h2 id=&quot;个人开发&quot;&gt;个人开发&lt;/h2&gt;
+&lt;p&gt;在本次项目的第一、二次开发中，我负责的是通用和参赛者部分的接口细节设计和后端开发，这部分整体开发过程比较顺利，常见的问题包括经常发现原有数据库设计和接口设计的缺陷，由于这部分属于公有部分，需要和团队其他人讨论后进行修改。&lt;br /&gt;
+同时为了便于开发，我将常用的用户基础检查封装为装饰器，将常用的输入参数合法性检查封装检查函数，减少了检查部分的重复性代码；但现有的代码中仍存在类似问题，需要进一步优化。&lt;br /&gt;
+现在的后端开发主要是基础的数据库相关操作，但后续的开发将应对高并发情况、着重数据安全、接入外部接口等，相应的开发难度会更大，因此在前期将基础部分规范好更有必要。&lt;/p&gt;
+
+&lt;h2 id=&quot;团队合作&quot;&gt;团队合作&lt;/h2&gt;
+&lt;p&gt;团队合作的过程不太顺利，主要与第一次进行前后端分离的团队开发有关，这对于前期的架构和接口设计具有很高的要求，尽可能减少后期开发中才发现的接口问题，因此每次迭代的这一阶段耗时较长，导致开发时间紧张。当然这也与团队成员分忙不同事情，缺少集中开发有关，在后续的开发中我们将安排强制性集中开发，尽可能避免这一问题。此外团队开发还存在git使用不熟练的问题，将在下一部分详述。&lt;/p&gt;
+
+&lt;h2 id=&quot;gitlab使用&quot;&gt;gitlab使用&lt;/h2&gt;
+&lt;p&gt;在了解了基础gitlab的敏捷开发规范后，我认为这样的规范是有利于小团队开发模式的。但这一规范在实际实施中还不够顺利，前期管理较为混乱，经过多次调整后，issue, board, milestone等的使用已经较为正规；但还存在commit粒度过粗、信息不规范等问题，将在接下的开发中尽可能更正。&lt;/p&gt;
+</description>
+				<pubDate>Fri, 24 Nov 2017 00:00:00 +0800</pubDate>
+				<link>http://localhost:4000/test.me/2017/11/24/WeChatTicket-test-me-midterm-summary.html</link>
+				<guid isPermaLink="true">http://localhost:4000/test.me/2017/11/24/WeChatTicket-test-me-midterm-summary.html</guid>
+			</item>
+		
+			<item>
 				<title>微信抢票｜个人开发总结</title>
 				<description>&lt;p&gt;微信抢票作为软件工程（3）课程的第一个开发项目，虽然是在半完成的框架上进行，整体开发周期也较短，但开发依然遇到了不少困难，本篇博客梳理了整个开发流程的各个阶段，留下一些感想总结，以备后用。&lt;/p&gt;
 
